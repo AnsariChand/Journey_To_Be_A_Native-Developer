@@ -64,7 +64,6 @@ Text
 Images
 Screens
 
-
 👉 React Native = Frontend banata hai
 
 🧠 Backend (Jo background me hota hai)
