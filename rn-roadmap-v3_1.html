@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React Native 6-Month Roadmap — Full Resources + Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#09090e;--surface:#111118;--card:#15151e;--border:#1d1d2b;
+  --text:#e8e8f0;--muted:#606078;
+  --c1:#7c6af7;--c2:#f76aac;--c3:#6af7d4;--c4:#f7c26a;--c5:#6ab4f7;--c6:#f76a6a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(124,106,247,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(124,106,247,.025) 1px,transparent 1px);
+  background-size:44px 44px;pointer-events:none;z-index:0;}
+
+.hero{position:relative;z-index:1;padding:70px 32px 50px;text-align:center;max-width:860px;margin:0 auto;}
+.badge{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--c3);border:1px solid rgba(106,247,212,.25);padding:6px 18px;border-radius:100px;margin-bottom:24px;background:rgba(106,247,212,.04);}
+.badge span{width:6px;height:6px;border-radius:50%;background:var(--c3);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(32px,6vw,64px);font-weight:800;line-height:1.04;letter-spacing:-2px;margin-bottom:16px;}
+h1 .g{background:linear-gradient(135deg,var(--c1),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.sub{color:var(--muted);font-size:15px;line-height:1.75;max-width:530px;margin:0 auto 36px;}
+.stats{display:flex;justify-content:center;gap:36px;flex-wrap:wrap;}
+.stat .n{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--c1);}
+.stat .l{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-top:2px;}
+
+/* channel legend */
+.legend{position:relative;z-index:1;max-width:1000px;margin:44px auto 32px;padding:0 20px;}
+.legend-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:14px;}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:7px;}
+.lc{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 13px;text-decoration:none;transition:all .18s;}
+.lc:hover{border-color:rgba(124,106,247,.4);background:rgba(124,106,247,.07);}
+.ldot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.lname{font-family:'DM Mono',monospace;font-size:10px;color:var(--text);flex:1;}
+.llang{font-size:9px;padding:1px 7px;border-radius:100px;border:1px solid;white-space:nowrap;}
+.len{color:var(--c5);border-color:rgba(106,180,247,.25);}
+.lhi{color:var(--c4);border-color:rgba(247,194,106,.25);}
+.lboth{color:var(--c3);border-color:rgba(106,247,212,.25);}
+
+/* platform links */
+.platforms{position:relative;z-index:1;max-width:1000px;margin:0 auto 36px;padding:0 20px;}
+.ptitle{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:12px;}
+.pgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.pc{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:7px 12px;text-decoration:none;transition:all .18s;font-size:12px;color:var(--muted);}
+.pc:hover{border-color:var(--c3);color:var(--text);}
+
+/* nav */
+.mnav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:0 16px;margin-bottom:40px;position:relative;z-index:1;}
+.mb{font-family:'DM Mono',monospace;font-size:11px;padding:7px 18px;border-radius:100px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;transition:all .18s;letter-spacing:1px;}
+.mb:hover,.mb.on{color:var(--text);border-color:var(--c1);background:rgba(124,106,247,.1);box-shadow:0 0 14px rgba(124,106,247,.2);}
+
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px 100px;position:relative;z-index:1;}
+.ms{display:none;}.ms.on{display:block;animation:fi .3s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.mhdr{display:flex;align-items:center;gap:18px;margin-bottom:30px;padding:22px 26px;background:var(--card);border:1px solid var(--border);border-radius:16px;position:relative;overflow:hidden;}
+.mhdr::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--mc);}
+.mnum{font-family:'Syne',sans-serif;font-size:50px;font-weight:800;color:var(--mc);opacity:.12;line-height:1;min-width:68px;}
+.minfo h2{font-family:'Syne',sans-serif;font-size:21px;font-weight:700;margin-bottom:4px;}
+.minfo p{color:var(--muted);font-size:12px;line-height:1.55;}
+.mtag{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;padding:5px 12px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--mc);white-space:nowrap;}
+.pbar{height:3px;background:var(--border);border-radius:100px;margin-bottom:38px;overflow:hidden;}
+.pfill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2));border-radius:100px;}
+
+.wb{margin-bottom:24px;}
+.wtitle{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--mc);margin-bottom:10px;display:flex;align-items:center;gap:9px;}
+.wtitle::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px;}
+.dc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;transition:all .18s;cursor:pointer;position:relative;overflow:hidden;}
+.dc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--mc);opacity:0;transition:opacity .18s;}
+.dc:hover{border-color:rgba(255,255,255,.09);transform:translateY(-2px);box-shadow:0 8px 26px rgba(0,0,0,.35);}
+.dc:hover::before,.dc.open::before{opacity:1;}
+.dc.open{border-color:var(--mc);background:var(--surface);}
+.dh{display:flex;align-items:flex-start;gap:10px;}
+.dnum{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;padding:3px 7px;white-space:nowrap;margin-top:2px;flex-shrink:0;}
+.dtopic{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;line-height:1.4;flex:1;}
+.xi{font-size:15px;color:var(--muted);transition:transform .2s;margin-left:auto;flex-shrink:0;}
+.dc.open .xi{transform:rotate(45deg);}
+.dd{display:none;margin-top:13px;padding-top:13px;border-top:1px solid var(--border);}
+.dc.open .dd{display:block;animation:fi .22s ease;}
+.dr{margin-bottom:9px;}
+.dl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mc);margin-bottom:3px;opacity:.85;}
+.dt{font-size:12px;color:#aaabcc;line-height:1.65;}
+
+/* resource tabs */
+.rtabs{margin-top:13px;}
+.rhead{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mc);margin-bottom:7px;opacity:.85;}
+.tabrow{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap;}
+.tbtn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;}
+.tbtn.on{border-color:var(--mc);color:var(--mc);background:rgba(255,255,255,.04);}
+.tpanel{display:none;flex-direction:column;gap:5px;}.tpanel.on{display:flex;}
+
+/* practice panel */
+.practice-list{display:flex;flex-direction:column;gap:6px;}
+.practice-item{display:flex;align-items:flex-start;gap:9px;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:8px;padding:9px 11px;}
+.pidx{font-family:'DM Mono',monospace;font-size:10px;color:var(--mc);font-weight:600;flex-shrink:0;margin-top:1px;}
+.ptext{font-size:11px;color:#aaabcc;line-height:1.6;}
+.ptag{display:inline-block;font-family:'DM Mono',monospace;font-size:8px;padding:1px 6px;border-radius:100px;border:1px solid;margin-right:4px;vertical-align:middle;}
+.tag-easy{color:var(--c3);border-color:rgba(106,247,212,.3);background:rgba(106,247,212,.06);}
+.tag-med{color:var(--c4);border-color:rgba(247,194,106,.3);background:rgba(247,194,106,.06);}
+.tag-hard{color:var(--c6);border-color:rgba(247,106,106,.3);background:rgba(247,106,106,.06);}
+
+/* resource link */
+.rl{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:8px;padding:8px 10px;text-decoration:none;transition:all .15s;}
+.rl:hover{background:rgba(124,106,247,.08);border-color:rgba(124,106,247,.38);transform:translateX(3px);}
+.ri{width:25px;height:25px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.ri.yt{background:rgba(255,0,0,.12);}
+.ri.doc{background:rgba(106,247,212,.1);}
+.ri.free{background:rgba(247,194,106,.1);}
+.ri.hi{background:rgba(247,106,172,.1);}
+.rmeta{flex:1;min-width:0;}
+.rtitle{font-size:11px;color:var(--text);line-height:1.3;font-weight:500;}
+.rch{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:1px;}
+.rbadge{font-family:'DM Mono',monospace;font-size:8px;padding:2px 7px;border-radius:100px;border:1px solid;flex-shrink:0;white-space:nowrap;}
+.byt{color:#f76a6a;border-color:rgba(247,106,106,.28);background:rgba(247,106,106,.06);}
+.bdoc{color:var(--c5);border-color:rgba(106,180,247,.28);background:rgba(106,180,247,.06);}
+.bfree{color:var(--c3);border-color:rgba(106,247,212,.28);background:rgba(106,247,212,.06);}
+.bhi{color:var(--c2);border-color:rgba(247,106,172,.28);background:rgba(247,106,172,.06);}
+
+.tip{margin-top:24px;padding:15px 20px;background:rgba(124,106,247,.05);border:1px solid rgba(124,106,247,.16);border-radius:12px;font-size:12px;color:var(--muted);line-height:1.75;}
+.tip strong{color:var(--c1);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+@media(max-width:600px){
+  .hero{padding:44px 16px 32px;}
+  .dgrid{grid-template-columns:1fr;}
+  .mhdr{flex-wrap:wrap;}.mtag{margin-left:0;}
+  .lgrid{grid-template-columns:1fr 1fr;}
+  .stats{gap:22px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge"><span></span>Zero to App Developer — v3.0 Fixed + Practice</div>
+  <h1>React Native<br><span class="g">6-Month Roadmap</span></h1>
+  <p class="sub">Day-by-day plan from zero to publishing real apps — with working links to <strong>English</strong>, <strong>Hindi/Hinglish</strong> videos, official docs, and <strong>hands-on practice exercises</strong> for every single topic.</p>
+  <div class="stats">
+    <div class="stat"><div class="n">180</div><div class="l">Days</div></div>
+    <div class="stat"><div class="n">200+</div><div class="l">Resources</div></div>
+    <div class="stat"><div class="n">150+</div><div class="l">Exercises</div></div>
+    <div class="stat"><div class="n">🇮🇳+🌍</div><div class="l">Languages</div></div>
+  </div>
+</div>
+
+<!-- CHANNELS -->
+<div class="legend">
+  <div class="legend-title">🎬 YouTube Channels in This Roadmap</div>
+  <div class="lgrid">
+    <a class="lc" href="https://www.youtube.com/@programmingwithmosh" target="_blank"><div class="ldot" style="background:#f76aac"></div><span class="lname">Programming w/ Mosh</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@TraversyMedia" target="_blank"><div class="ldot" style="background:#f7c26a"></div><span class="lname">Traversy Media</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@freecodecamp" target="_blank"><div class="ldot" style="background:#6af7d4"></div><span class="lname">freeCodeCamp</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@NetNinja" target="_blank"><div class="ldot" style="background:#6ab4f7"></div><span class="lname">The Net Ninja</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@WebDevSimplified" target="_blank"><div class="ldot" style="background:#7c6af7"></div><span class="lname">Web Dev Simplified</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@notjustdevs" target="_blank"><div class="ldot" style="background:#f76a6a"></div><span class="lname">notJust.dev</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@SimonGrimmDev" target="_blank"><div class="ldot" style="background:#6af7d4"></div><span class="lname">Simon Grimm</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@wcandillon" target="_blank"><div class="ldot" style="background:#f76aac"></div><span class="lname">William Candillon</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@JavaScriptMastery" target="_blank"><div class="ldot" style="background:#f7c26a"></div><span class="lname">JavaScript Mastery</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@Academind" target="_blank"><div class="ldot" style="background:#7c6af7"></div><span class="lname">Academind</span><span class="llang len">EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@CodeWithHarry" target="_blank"><div class="ldot" style="background:#f7c26a"></div><span class="lname">CodeWithHarry</span><span class="llang lhi">हिंदी</span></a>
+    <a class="lc" href="https://www.youtube.com/@ApnaCollegeOfficial" target="_blank"><div class="ldot" style="background:#6af7d4"></div><span class="lname">Apna College</span><span class="llang lhi">हिंदी</span></a>
+    <a class="lc" href="https://www.youtube.com/@WsCubeTech" target="_blank"><div class="ldot" style="background:#f76aac"></div><span class="lname">WsCube Tech</span><span class="llang lhi">हिंदी</span></a>
+    <a class="lc" href="https://www.youtube.com/@ThapaTechnical" target="_blank"><div class="ldot" style="background:#6ab4f7"></div><span class="lname">Thapa Technical</span><span class="llang lboth">हिं+EN</span></a>
+    <a class="lc" href="https://www.youtube.com/@CoderArmy9" target="_blank"><div class="ldot" style="background:#f76a6a"></div><span class="lname">Coder Army</span><span class="llang lhi">हिंदी</span></a>
+  </div>
+</div>
+
+<!-- PRACTICE PLATFORMS -->
+<div class="platforms">
+  <div class="ptitle">✏️ Practice Platforms (All Free)</div>
+  <div class="pgrid">
+    <a class="pc" href="https://snack.expo.dev" target="_blank">📱 Expo Snack — RN Online IDE</a>
+    <a class="pc" href="https://codepen.io" target="_blank">🖥️ CodePen — JS Playground</a>
+    <a class="pc" href="https://jsfiddle.net" target="_blank">⚡ JSFiddle — Quick JS Tests</a>
+    <a class="pc" href="https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/" target="_blank">🏆 freeCodeCamp — JS Challenges</a>
+    <a class="pc" href="https://flexboxfroggy.com" target="_blank">🐸 Flexbox Froggy — Layout Game</a>
+    <a class="pc" href="https://javascript30.com" target="_blank">🎯 JavaScript30 — 30 Projects</a>
+    <a class="pc" href="https://www.codewars.com" target="_blank">⚔️ Codewars — Coding Katas</a>
+    <a class="pc" href="https://leetcode.com" target="_blank">💡 LeetCode — Interview Prep</a>
+    <a class="pc" href="https://github.com" target="_blank">🐙 GitHub — Push Your Code</a>
+    <a class="pc" href="https://jsonplaceholder.typicode.com" target="_blank">🌐 JSONPlaceholder — Free API</a>
+  </div>
+</div>
+
+<!-- MONTH NAV -->
+<div class="mnav">
+  <button class="mb on" onclick="showM(0)">📘 Month 1</button>
+  <button class="mb" onclick="showM(1)">📗 Month 2</button>
+  <button class="mb" onclick="showM(2)">📙 Month 3</button>
+  <button class="mb" onclick="showM(3)">📕 Month 4</button>
+  <button class="mb" onclick="showM(4)">📒 Month 5</button>
+  <button class="mb" onclick="showM(5)">🏆 Month 6</button>
+</div>
+
+<div class="wrap" id="root"></div>
+
+<script>
+/* ── helpers ── */
+// YouTube search URLs — these ALWAYS work
+const YS=(q,c)=>({icon:'yt',t:`Search: "${q}"`,c,u:`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`});
+const YC=(name,url)=>({icon:'yt',t:`${name} — YouTube Channel`,c:name,u:url});
+const D=(t,c,u)=>({icon:'doc',t,c,u});
+const F=(t,c,u)=>({icon:'free',t,c,u});
+const HI=(q,c)=>({icon:'hi',t:`Search: "${q}"`,c,u:`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`});
+
+/* ── FULL DATA ── */
+const M=[
+/* ═══ MONTH 1 ═══ */
+{title:"Programming Fundamentals & JavaScript",color:"#7c6af7",tag:"Foundation",
+desc:"Start from absolute zero — computers, code, and modern JavaScript that powers React Native.",
+tip:"Open your browser, press F12, click Console — you have a free JS playground RIGHT NOW. Type code there every day. No install needed.",
+weeks:[
+{label:"Week 1 — How Computers & Code Work",days:[
+{day:"Day 1",topic:"What is Programming?",
+ what:"How computers work, binary, what code is, why mobile apps need programming.",
+ why:"Mental model first. This shapes every learning decision you make from here on.",
+ uses:"The mindset that underpins every line of code you'll ever write.",
+ en:[YS("what is programming explained beginners","freeCodeCamp"),YS("how computers work for beginners","CS Dojo")],
+ hi:[HI("programming kya hai hindi beginners","CodeWithHarry"),HI("coding kaise seekhen beginners hindi","Apna College")],
+ docs:[D("MDN — What is JavaScript?","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/What_is_JavaScript"),D("CS50 Free Course (Harvard)","CS50","https://cs50.harvard.edu/x/")],
+ practice:["✏️ Write in a notebook: what problem does programming solve in everyday life?","✏️ Name 5 apps on your phone and think: what data do they store?","✏️ Open browser → F12 → Console → type 2+2 and press Enter. You just coded!","✏️ Google 'how does a smartphone app work' and summarize in 3 sentences."]},
+
+{day:"Day 2",topic:"Setting Up Dev Environment",
+ what:"Install VS Code editor, Node.js runtime, learn basic terminal commands (cd, ls, mkdir).",
+ why:"These tools are your workspace. Master them once, use them every day forever.",
+ uses:"Every project you build will start with these tools.",
+ en:[YS("VS Code setup beginners 2024","Traversy Media"),YS("node.js install beginners guide","Programming with Mosh")],
+ hi:[HI("VS Code install karna hindi tutorial","CodeWithHarry"),HI("node.js setup hindi beginners","WsCube Tech")],
+ docs:[D("VS Code Official Docs","code.visualstudio.com","https://code.visualstudio.com/docs"),D("Node.js Official Download","nodejs.org","https://nodejs.org/en/download/"),D("VS Code Keyboard Shortcuts PDF","code.visualstudio.com","https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf")],
+ practice:["✏️ Install VS Code and install the 'Prettier' extension. Format a test file.","✏️ Open terminal and run: node --version. See the version number.","✏️ Create a folder called 'my-learning' using terminal (mkdir command).","✏️ Create a file hello.js, write console.log('Hello World!'), run with: node hello.js","✏️ Learn 5 VS Code shortcuts: Ctrl+S, Ctrl+Z, Ctrl+/, Ctrl+P, Ctrl+` (open terminal)."]},
+
+{day:"Day 3",topic:"Variables & Data Types",
+ what:"let, const, var differences; string, number, boolean, null, undefined, typeof operator.",
+ why:"Variables are the basic unit of all programs. All data in your app lives in variables.",
+ uses:"Username, price, isLoggedIn, age — every piece of data in your app.",
+ en:[YS("javascript variables data types beginners","Programming with Mosh"),YS("javascript crash course beginners","Traversy Media")],
+ hi:[HI("javascript variables data types hindi","CodeWithHarry"),HI("variables aur data types javascript hindi","WsCube Tech"),HI("javascript tutorial hindi beginners apna college","Apna College")],
+ docs:[D("MDN — Grammar and Types","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types"),F("freeCodeCamp JS Challenges","freeCodeCamp","https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/")],
+ practice:["✏️ Declare 5 variables: your name, age, city, isStudent (boolean), favoriteColor.","✏️ Use typeof on each variable and console.log the result. Notice the types.","✏️ Try: let x = 5; x = 10; — then: const y = 5; y = 10; — why does the second one error?","✏️ Create variables for a product: productName, price, inStock, category.","✏️ Use template literals to print: 'My name is [name], I am [age] years old.'"]},
+
+{day:"Day 4",topic:"Operators & Expressions",
+ what:"Arithmetic (+,-,*,/,%), comparison (===,!==,>,<,>=,<=), logical (&&,||,!), ternary.",
+ why:"Operators are how you compute and compare. Logic = decisions = app behavior.",
+ uses:"Price calculations, login checks, validation rules, feature toggles.",
+ en:[YS("javascript operators expressions beginners","Web Dev Simplified"),YS("javascript comparison logical operators","The Net Ninja")],
+ hi:[HI("javascript operators hindi tutorial","CodeWithHarry"),HI("operators javascript hindi apna college","Apna College")],
+ docs:[D("MDN — Expressions and Operators","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators")],
+ practice:["✏️ Calculate: price = 1200, discount = 15%. Write JS to find final price.","✏️ Write: is 17 greater than 21? Use ===, !==, > and console.log each result.","✏️ Ternary: let msg = age >= 18 ? 'Adult' : 'Minor'. Test with age = 16 and 25.","✏️ Combine: (price > 1000) && inStock — what does this check in a real app?","✏️ Use % (modulus): check if a number is even or odd."]},
+
+{day:"Day 5",topic:"If / Else & Switch",
+ what:"if, else if, else chains; switch statement; nested conditions; guard clauses.",
+ why:"Every app makes decisions — show this screen or that, allow or block actions.",
+ uses:"Login validation, role-based access, showing correct screen based on data.",
+ en:[YS("javascript if else conditions beginners","Web Dev Simplified"),YS("javascript switch statement tutorial","The Net Ninja")],
+ hi:[HI("if else javascript hindi tutorial","CodeWithHarry"),HI("conditions javascript hindi","WsCube Tech")],
+ docs:[D("MDN — if...else","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else"),D("MDN — switch","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch")],
+ practice:["✏️ Grade calculator: score 90+=A, 80+=B, 70+=C, else Fail. Test 5 scores.","✏️ Traffic light: switch on 'red','green','yellow' — print what to do.","✏️ Write: if user is logged in AND has items in cart → show checkout button.","✏️ BMI calculator: take weight and height, print Underweight/Normal/Overweight.","✏️ Build a simple number guessing game: if (guess === secret) 'Correct!' else 'Wrong!'"]},
+
+{day:"Day 6",topic:"Loops — for, while, forEach",
+ what:"for loop, while loop, do-while, for...of, for...in, array.forEach.",
+ why:"Apps repeat things constantly — render 100 items, process each user, check every field.",
+ uses:"Rendering product lists, checking every item in cart, processing API arrays.",
+ en:[YS("javascript loops for while beginners","Web Dev Simplified"),YS("javascript for loop while loop tutorial","The Net Ninja")],
+ hi:[HI("javascript loops hindi for while","CodeWithHarry"),HI("loops javascript hindi beginners","Apna College")],
+ docs:[D("MDN — Loops and iteration","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration")],
+ practice:["✏️ Print 1 to 100 using a for loop.","✏️ Print only even numbers from 1–50 using for + if.","✏️ Create array of 5 fruits. Loop and print each with its index number.","✏️ Sum all numbers from 1 to 100 using a while loop. Answer should be 5050.","✏️ FizzBuzz: 1–30, print Fizz (div by 3), Buzz (div by 5), FizzBuzz (both)."]},
+
+{day:"Day 7",topic:"Review Week + Mini Project",
+ what:"Review all week 1 concepts. Build: a number guessing game using loops + conditions.",
+ why:"Active recall by building is 10x more effective than re-reading notes.",
+ uses:"Consolidates all 6 days so you're ready for arrays and functions.",
+ en:[YS("javascript beginner project number guessing game","Web Dev Simplified")],
+ hi:[HI("javascript project beginners hindi","CodeWithHarry")],
+ docs:[F("JavaScript30 — Day 1 Free","javascript30.com","https://javascript30.com/"),F("freeCodeCamp JS Exercises","freecodecamp.org","https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/")],
+ practice:["✏️ Rewrite all 6 days' code from memory (without looking).","✏️ Build: Number guessing game. Random 1-10, user guesses with prompts, count attempts.","✏️ Build: Simple calculator that takes two numbers and an operator (+,-,*,/) and returns result.","✏️ Write your personal learning notes — what was hardest? Look up extra resources."]},
+]},
+
+{label:"Week 2 — Functions, Arrays & Objects",days:[
+{day:"Day 8",topic:"Functions — Parameters, Return, Scope",
+ what:"function declaration, arrow functions, parameters, return values, scope (local/global).",
+ why:"Every React Native screen is a function. Functions ARE the building blocks of React.",
+ uses:"Every UI component, every event handler, every data transformer in your apps.",
+ en:[YS("javascript functions complete guide","Programming with Mosh"),YS("javascript arrow functions tutorial","Web Dev Simplified")],
+ hi:[HI("javascript functions hindi tutorial","CodeWithHarry"),HI("functions kya hoti hain javascript hindi","Apna College")],
+ docs:[D("MDN — Functions Guide","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions"),D("MDN — Arrow functions","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions")],
+ practice:["✏️ Write a function add(a, b) that returns a+b. Test with 5 different inputs.","✏️ Write formatPrice(price) → returns '$1,200.00' format.","✏️ Convert all your Week 1 exercises into functions.","✏️ Write an arrow function greet = (name) => `Hello, ${name}!`","✏️ Write a function that takes an array of numbers and returns the largest."]},
+
+{day:"Day 9",topic:"Arrays — Methods & Manipulation",
+ what:"push, pop, map, filter, find, reduce, sort, slice, splice, includes, indexOf.",
+ why:"API data comes as arrays. React Native lists (FlatList) use arrays.",
+ uses:"Product feeds, user lists, cart items, message threads — all arrays.",
+ en:[YS("javascript array methods tutorial map filter reduce","Web Dev Simplified"),YS("javascript arrays complete tutorial","Traversy Media")],
+ hi:[HI("javascript array methods hindi map filter","CodeWithHarry"),HI("arrays javascript hindi tutorial","WsCube Tech")],
+ docs:[D("MDN — Array Reference","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"),F("30 Days of JS — Arrays Challenge","github.com","https://github.com/Asabeneh/30-Days-Of-JavaScript")],
+ practice:["✏️ Given [3,1,4,1,5,9,2,6], use filter to get numbers > 4.","✏️ Use map to convert an array of prices to 'Discounted: ₹X' strings.","✏️ Use find to locate a user by id from an array of user objects.","✏️ Use reduce to calculate total cart price from [{name,price,qty}, ...].","✏️ Sort an array of product names alphabetically using .sort()."]},
+
+{day:"Day 10",topic:"Objects — Properties, Methods, Destructuring",
+ what:"Object literals, dot notation, bracket notation, nested objects, destructuring, spread.",
+ why:"All API responses are objects. User profiles, products, posts = objects.",
+ uses:"Product data, user object, location coordinates, theme object.",
+ en:[YS("javascript objects tutorial beginners","Web Dev Simplified"),YS("javascript object destructuring spread","The Net Ninja")],
+ hi:[HI("javascript objects hindi tutorial","CodeWithHarry"),HI("destructuring hindi javascript","Thapa Technical")],
+ docs:[D("MDN — Working with Objects","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects"),D("MDN — Destructuring assignment","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment")],
+ practice:["✏️ Create a product object with 8 properties: name, price, rating, inStock, category, image, id, description.","✏️ Destructure: const { name, price, rating } = product — print them.","✏️ Create a nested object: user.address.city — access and print city.","✏️ Spread: create a discountedProduct = {...product, price: product.price * 0.9}.","✏️ Write a function that takes a user object and returns a formatted display string."]},
+
+{day:"Day 11",topic:"Promises & Async/Await",
+ what:"Callbacks problem, Promise API, .then()/.catch(), async keyword, await, try/catch.",
+ why:"Every app fetches data from internet. Async is unavoidable — master it here.",
+ uses:"Loading users, posting messages, uploading images, checking stock availability.",
+ en:[YS("javascript promises async await complete tutorial","Web Dev Simplified"),YS("javascript async await tutorial beginners","The Net Ninja")],
+ hi:[HI("javascript promises async await hindi","CodeWithHarry"),HI("async await hindi javascript tutorial","Thapa Technical")],
+ docs:[D("MDN — async/await","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Promises"),D("MDN — Promise","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise")],
+ practice:["✏️ Create a function that returns a Promise resolving after 1 second with 'Done!'","✏️ Fetch data from https://jsonplaceholder.typicode.com/users and console.log first user's name.","✏️ Use async/await with try/catch to fetch from a fake URL — handle the error gracefully.","✏️ Fetch 3 posts from JSONPlaceholder and print title + userId of each.","✏️ Chain: fetch users → find user with id:3 → fetch their posts → print post count."]},
+
+{day:"Day 12",topic:"ES6+ Modern JS — Modules & Template Literals",
+ what:"import/export, template literals, optional chaining (?.), nullish coalescing (??), rest/spread.",
+ why:"React Native uses ALL of these every day. This is the modern JS you'll write 100%.",
+ uses:"File imports, dynamic UI text, safe data access, function argument grouping.",
+ en:[YS("javascript es6 modules import export tutorial","Web Dev Simplified"),YS("javascript modern features optional chaining nullish","Web Dev Simplified")],
+ hi:[HI("javascript es6 features hindi tutorial","CodeWithHarry"),HI("modern javascript hindi es6 features","Thapa Technical")],
+ docs:[D("MDN — Modules Guide","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules"),D("MDN — Template literals","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals"),D("MDN — Optional chaining","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining")],
+ practice:["✏️ Create math.js with add, subtract, multiply functions. Export and import in main.js.","✏️ Use template literals: build a product card string with 5 variables.","✏️ Use optional chaining: user?.address?.pincode — test when address is undefined.","✏️ Use ??: let name = user.name ?? 'Anonymous' — test when user.name is null.","✏️ Use rest: function sum(...nums) { return nums.reduce((a,b)=>a+b,0) } — test it."]},
+
+{day:"Day 13",topic:"Error Handling & Debugging",
+ what:"try/catch/finally, custom errors, console.log vs .warn vs .error, debugger statement.",
+ why:"Production apps ALWAYS have errors. You must catch, handle, and show friendly messages.",
+ uses:"Network errors, empty state screens, form validation errors, crash prevention.",
+ en:[YS("javascript error handling try catch tutorial","Programming with Mosh"),YS("javascript debugging techniques beginners","Web Dev Simplified")],
+ hi:[HI("javascript error handling try catch hindi","CodeWithHarry")],
+ docs:[D("MDN — try...catch","MDN Web Docs","https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch")],
+ practice:["✏️ Wrap a fetch call in try/catch and display different messages for network vs server error.","✏️ Create a custom error class: class ValidationError extends Error {}","✏️ Use console.error, console.warn, console.table — see how they look different in console.","✏️ Write a function parseJSON(str) that safely parses JSON or returns null on failure.","✏️ Add finally: always close a 'connection' log whether success or failure."]},
+
+{day:"Day 14",topic:"Week 2 Project — Product Catalog JS App",
+ what:"Build: Product array with objects, filter by category, sort by price, search by name, total price.",
+ why:"Combines everything: arrays, objects, functions, filter, map, reduce.",
+ uses:"Exact logic used in real e-commerce React Native apps.",
+ en:[YS("javascript project product catalog array filter","Traversy Media")],
+ hi:[HI("javascript project beginners hindi product","CodeWithHarry")],
+ docs:[F("CodePen — Build online","codepen.io","https://codepen.io/"),F("JSFiddle — Quick playground","jsfiddle.net","https://jsfiddle.net/")],
+ practice:["✏️ Create 10 product objects with name, price, category, rating, inStock.","✏️ Function: filterByCategory(products, category) → filtered array.","✏️ Function: sortByPrice(products, 'asc'|'desc') → sorted array.","✏️ Function: searchProducts(products, query) → matching name products.","✏️ Function: cartTotal(cart) → sum of price * quantity for each item."]},
+]},
+
+{label:"Week 3 — React Fundamentals",days:[
+{day:"Day 15",topic:"What is React & Why Components?",
+ what:"Component-based thinking, virtual DOM, JSX syntax, why React Native uses React.",
+ why:"React Native IS React. No React = no React Native. This is non-negotiable.",
+ uses:"Every screen, button, list, card in your mobile apps.",
+ en:[YS("react js crash course beginners 2024","Traversy Media"),YS("react js in 100 seconds","Fireship")],
+ hi:[HI("react js kya hai hindi beginners","CodeWithHarry"),HI("react js tutorial hindi beginners","Thapa Technical"),HI("react js tutorial hindi wscube","WsCube Tech")],
+ docs:[D("React — Official Quick Start","react.dev","https://react.dev/learn"),D("React — Thinking in React","react.dev","https://react.dev/learn/thinking-in-react")],
+ practice:["✏️ Draw a wireframe of Instagram. Circle every 'component' you can identify.","✏️ Set up a React project: npx create-react-app myapp — run it in browser.","✏️ In App.js, change the title and background color using JSX.","✏️ List 5 differences between HTML and JSX you notice.","✏️ Write a JSX expression that shows today's date dynamically."]},
+
+{day:"Day 16",topic:"Components, Props & JSX",
+ what:"Functional components, JSX rules, props passing, default props, children prop.",
+ why:"Props are how components communicate. Every UI piece is a reusable component.",
+ uses:"Reusable ProductCard, UserAvatar, Button components across all screens.",
+ en:[YS("react components props tutorial beginners","Web Dev Simplified"),YS("react props explained","The Net Ninja")],
+ hi:[HI("react components props hindi tutorial","CodeWithHarry"),HI("react props kya hain hindi","Apna College")],
+ docs:[D("React — Your First Component","react.dev","https://react.dev/learn/your-first-component"),D("React — Passing Props","react.dev","https://react.dev/learn/passing-props-to-a-component")],
+ practice:["✏️ Create a <ProductCard /> component that takes name, price, rating as props.","✏️ Create a <UserAvatar /> component with name and imageUrl props.","✏️ Build a <Button /> with label, color, and onPress props.","✏️ Use your ProductCard to render 5 different products (hardcoded data).","✏️ Add a defaultProps: if no price passed, show 'Price on request'."]},
+
+{day:"Day 17",topic:"useState — Making Things Interactive",
+ what:"useState hook: initial state, setter function, re-render cycle, updating arrays/objects in state.",
+ why:"State = interactivity. Without it your app is a static screenshot.",
+ uses:"Counter, toggle dark mode, form input, add-to-cart, like button.",
+ en:[YS("usestate hook react complete tutorial","Web Dev Simplified"),YS("react hooks useState explained","Academind")],
+ hi:[HI("usestate hook react hindi tutorial","CodeWithHarry"),HI("react hooks hindi useState","Thapa Technical")],
+ docs:[D("React — useState reference","react.dev","https://react.dev/reference/react/useState"),D("React — State: A Component's Memory","react.dev","https://react.dev/learn/state-a-components-memory")],
+ practice:["✏️ Counter app: + and - buttons, display count, don't go below 0.","✏️ Like button: toggle between ❤️ Liked and 🤍 Like. Track count.","✏️ Dark mode toggle: click button to switch background between black and white.","✏️ Form input: controlled input where state updates on every keystroke.","✏️ Todo list: add items to an array in state and display them."]},
+
+{day:"Day 18",topic:"useEffect — Side Effects & Data Fetching",
+ what:"useEffect syntax, dependency array, cleanup functions, fetching data on mount.",
+ why:"Most data loading and lifecycle logic lives in useEffect. Essential for real apps.",
+ uses:"Load posts when screen opens, set up timers, subscribe to events.",
+ en:[YS("useEffect hook react complete guide","Web Dev Simplified"),YS("react useEffect tutorial","The Net Ninja")],
+ hi:[HI("useEffect react hook hindi","CodeWithHarry"),HI("useEffect hindi apna college","Apna College")],
+ docs:[D("React — useEffect reference","react.dev","https://react.dev/reference/react/useEffect"),D("React — Synchronizing with Effects","react.dev","https://react.dev/learn/synchronizing-with-effects")],
+ practice:["✏️ Fetch posts from JSONPlaceholder on component mount. Display titles.","✏️ Set a timer: useEffect with setInterval, display seconds elapsed.","✏️ Track window size with event listener. Cleanup listener on unmount.","✏️ Fetch data only when a 'category' state changes (use it as dependency).","✏️ Show loading spinner while data is fetching, then show data."]},
+
+{day:"Day 19",topic:"Lists, Conditional Rendering & Keys",
+ what:"Render arrays with .map(), key prop, &&, ternary, show/hide components.",
+ why:"Real apps always show dynamic lists and conditional UI — unavoidable.",
+ uses:"Product feeds, notification lists, empty states, role-based screens.",
+ en:[YS("react conditional rendering tutorial","Web Dev Simplified"),YS("rendering lists keys react","The Net Ninja")],
+ hi:[HI("conditional rendering react hindi","CodeWithHarry")],
+ docs:[D("React — Rendering Lists","react.dev","https://react.dev/learn/rendering-lists"),D("React — Conditional Rendering","react.dev","https://react.dev/learn/conditional-rendering")],
+ practice:["✏️ Render 10 users from JSONPlaceholder. Show name and email per card.","✏️ Add a condition: if list is empty → show 'No items found' message.","✏️ Show 'Loading...' while fetching, 'Error' if fetch fails, data when done.","✏️ Add a 'Show Only Active' button that filters users based on state.","✏️ Render a star rating (1–5) using .map() and conditional star color."]},
+
+{day:"Day 20",topic:"React Context API",
+ what:"createContext, Provider, useContext, pass data without prop drilling.",
+ why:"Auth state, theme, cart need to be available across all screens.",
+ uses:"Login state, dark mode, shopping cart, language preference.",
+ en:[YS("react context api tutorial complete","Web Dev Simplified"),YS("react context api beginners","The Net Ninja")],
+ hi:[HI("react context api hindi tutorial","CodeWithHarry"),HI("context api hindi thapa","Thapa Technical")],
+ docs:[D("React — createContext","react.dev","https://react.dev/reference/react/createContext"),D("React — Passing Data with Context","react.dev","https://react.dev/learn/passing-data-deeply-with-context")],
+ practice:["✏️ Create a ThemeContext that provides dark/light mode to all components.","✏️ Create a UserContext that provides logged-in user info to Header and Profile.","✏️ Create a LanguageContext that switches between English/Hindi text.","✏️ Combine: Cart context that tracks items + total, accessible from any component."]},
+
+{day:"Day 21",topic:"Month 1 Project — React ToDo + Fetcher",
+ what:"Build: Full ToDo app (add, complete, delete, filter) + a data page fetching from a public API.",
+ why:"Two projects in one day solidifies everything. Your first portfolio piece.",
+ uses:"Demonstrates fundamentals to any employer or client.",
+ en:[YS("react todo app beginners project 2024","JavaScript Mastery"),YS("react beginner project api fetch","Traversy Media")],
+ hi:[HI("react todo app hindi project","CodeWithHarry"),HI("react project hindi beginners","WsCube Tech")],
+ docs:[F("Expo Snack — Test React Native","snack.expo.dev","https://snack.expo.dev/"),F("CodeSandbox — React Online","codesandbox.io","https://codesandbox.io/")],
+ practice:["✏️ ToDo: add task, mark complete (strikethrough), delete task, filter Active/Done/All.","✏️ Fetch: get 20 posts from JSONPlaceholder, display with search filter.","✏️ Push both projects to GitHub with a good README.","✏️ Add localStorage to ToDo so tasks persist on page refresh.","✏️ Style both apps nicely (even basic CSS counts — design matters!)."]},
+]},
+]},
+
+/* ═══ MONTH 2 ═══ */
+{title:"React Native Core — Build Your First Mobile App",color:"#f76aac",tag:"React Native",
+desc:"Install Expo, learn RN components, navigation, and build multi-screen apps with live API data.",
+tip:"Install Expo Go on your actual phone RIGHT NOW. Scan the QR code from your terminal — see your code on a real phone instantly. This feeling is addictive and will motivate you.",
+weeks:[
+{label:"Week 5 — Expo Setup & Core Components",days:[
+{day:"Day 29",topic:"What is React Native? Setup & Expo",
+ what:"How RN bridges JS to native, Expo vs bare, Expo Go app, project structure, Metro bundler.",
+ why:"Understanding the tool before using it prevents hours of confusion later.",
+ uses:"Every app you build for the next year uses this foundation.",
+ en:[YS("react native expo setup beginners 2024","Simon Grimm"),YS("react native beginners full course expo","notJust.dev")],
+ hi:[HI("react native setup hindi expo 2024","WsCube Tech"),HI("react native kya hai hindi beginners","CodeWithHarry")],
+ docs:[D("React Native — Getting Started","reactnative.dev","https://reactnative.dev/docs/getting-started"),D("Expo — Introduction","docs.expo.dev","https://docs.expo.dev/get-started/introduction/"),F("Expo Snack — No Install Needed","snack.expo.dev","https://snack.expo.dev/")],
+ practice:["✏️ Run: npx create-expo-app@latest MyFirstApp — let it install.","✏️ Start the app: npx expo start — scan QR with your phone.","✏️ Change the text in App.js and see it hot-reload on your phone instantly.","✏️ Change the background color. Change the font size. See the live update.","✏️ Delete App.js content and rewrite from scratch: a screen with your name and 3 facts about you."]},
+
+{day:"Day 30",topic:"View, Text, Image — Core Components",
+ what:"View (container), Text (display text), Image (local + network), SafeAreaView.",
+ why:"These 3 components make up 80% of every mobile screen.",
+ uses:"Every screen, card, profile, feed item in your apps.",
+ en:[YS("react native view text image components tutorial","Simon Grimm"),YS("react native core components beginners","The Net Ninja")],
+ hi:[HI("react native core components hindi view text image","WsCube Tech")],
+ docs:[D("RN — View","reactnative.dev","https://reactnative.dev/docs/view"),D("RN — Text","reactnative.dev","https://reactnative.dev/docs/text"),D("RN — Image","reactnative.dev","https://reactnative.dev/docs/image")],
+ practice:["✏️ Build a business card: name (large), title (medium), company (small), profile image.","✏️ Load a network image from picsum.photos/200/200 and a local image.","✏️ Try: Text inside Text (nested styling). Make one word bold inside a sentence.","✏️ Build a 'quote card': big quote text, small author name, accent colored border.","✏️ Add SafeAreaView — see what changes on a device with a notch."]},
+
+{day:"Day 31",topic:"StyleSheet & Flexbox Layout",
+ what:"StyleSheet.create(), all style properties, Flexbox: flexDirection, justify, align, flex, gap.",
+ why:"No CSS in RN. All styling is JS. Flexbox is the ONLY layout system.",
+ uses:"Every layout: header, card, tab bar, screen grid, row, column.",
+ en:[YS("react native stylesheet flexbox layout tutorial","Simon Grimm"),YS("react native flexbox layout complete guide","notJust.dev")],
+ hi:[HI("react native flexbox hindi tutorial","WsCube Tech"),HI("react native styling hindi beginners","Thapa Technical")],
+ docs:[D("RN — Layout with Flexbox","reactnative.dev","https://reactnative.dev/docs/flexbox"),D("RN — StyleSheet","reactnative.dev","https://reactnative.dev/docs/stylesheet"),F("Flexbox Froggy Game","flexboxfroggy.com","https://flexboxfroggy.com/")],
+ practice:["✏️ Build a row of 3 equal-width colored boxes using flexDirection:'row' and flex:1.","✏️ Center content perfectly (horizontally AND vertically) in a full-screen View.","✏️ Build a card with: image on left, title+subtitle on right — using flexRow.","✏️ Create a navigation bar layout: logo left, 2 icons right — using space-between.","✏️ Build a 2-column grid of 6 product cards using flexWrap:'wrap'."]},
+
+{day:"Day 32",topic:"TouchableOpacity, Pressable & Button",
+ what:"Button, TouchableOpacity, Pressable, onPress, onLongPress, disabled state, feedback.",
+ why:"Without touch handling your app is just a static image.",
+ uses:"Every button, CTA, list item tap, nav link, like button.",
+ en:[YS("react native pressable touchableopacity button tutorial","Simon Grimm")],
+ hi:[HI("react native buttons hindi touchableopacity","WsCube Tech")],
+ docs:[D("RN — Pressable","reactnative.dev","https://reactnative.dev/docs/pressable"),D("RN — TouchableOpacity","reactnative.dev","https://reactnative.dev/docs/touchableopacity")],
+ practice:["✏️ Build 3 buttons: primary (filled), secondary (outlined), danger (red).","✏️ Add a counter: + and - buttons update a count displayed between them.","✏️ Implement disabled state: button grays out when count reaches 10.","✏️ LongPress: hold button 500ms → show alert 'Long pressed!'","✏️ Build a 'like' button that toggles ❤️/🤍 with color change animation (opacity)."]},
+
+{day:"Day 33",topic:"TextInput & Keyboard Handling",
+ what:"TextInput props: value, onChangeText, placeholder, keyboardType, secureTextEntry, multiline. KeyboardAvoidingView.",
+ why:"Forms are everywhere. Every app with user data needs text inputs.",
+ uses:"Login, register, search, chat, profile edit, review, checkout.",
+ en:[YS("react native textinput forms tutorial","Simon Grimm"),YS("react native keyboard handling forms","notJust.dev")],
+ hi:[HI("react native textinput hindi forms","WsCube Tech")],
+ docs:[D("RN — TextInput","reactnative.dev","https://reactnative.dev/docs/textinput"),D("RN — KeyboardAvoidingView","reactnative.dev","https://reactnative.dev/docs/keyboardavoidingview")],
+ practice:["✏️ Build login form: email (keyboard:email), password (secureTextEntry).","✏️ Validate: show red border + error text if email doesn't contain '@'.","✏️ Build a search bar that filters a list as you type (real-time filter).","✏️ Build a multiline comment box with a 150-character limit counter.","✏️ Test KeyboardAvoidingView: put input at bottom, make sure keyboard doesn't cover it."]},
+
+{day:"Day 34",topic:"FlatList & ScrollView",
+ what:"ScrollView for small lists, FlatList for large lists, renderItem, keyExtractor, ListEmptyComponent, pull-to-refresh.",
+ why:"Every app has scrollable content. FlatList handles 10,000 items efficiently.",
+ uses:"Product feeds, news, contacts, messages, search results.",
+ en:[YS("react native flatlist complete tutorial","notJust.dev"),YS("react native scrollview vs flatlist","Simon Grimm")],
+ hi:[HI("react native flatlist hindi scrollview","WsCube Tech")],
+ docs:[D("RN — FlatList","reactnative.dev","https://reactnative.dev/docs/flatlist"),D("RN — ScrollView","reactnative.dev","https://reactnative.dev/docs/scrollview"),D("RN — SectionList","reactnative.dev","https://reactnative.dev/docs/sectionlist")],
+ practice:["✏️ Fetch 20 users from JSONPlaceholder. Render in FlatList with name + email.","✏️ Add pull-to-refresh: refetch data on pull-down gesture.","✏️ Add ListEmptyComponent: show 'No users found' when list is empty.","✏️ Add ListHeaderComponent: a search bar that filters the list.","✏️ Build a horizontal FlatList of category chips: Food, Tech, Sports, Fashion."]},
+
+{day:"Day 35",topic:"Build: Profile Screen + Feed Screen",
+ what:"Full Profile screen (avatar, stats, bio, buttons) + scrollable Post Feed from API.",
+ why:"Two complete screens that look like a real social app.",
+ uses:"Base structure for any social, fitness, or content app.",
+ en:[YS("react native profile screen ui build","notJust.dev"),YS("react native instagram ui clone","JavaScript Mastery")],
+ hi:[HI("react native profile screen hindi build","WsCube Tech")],
+ docs:[F("Expo Snack — Share your work","snack.expo.dev","https://snack.expo.dev/")],
+ practice:["✏️ Profile: avatar image, name, bio text, 3 stats (posts/followers/following), Follow button.","✏️ Feed: FlatList of cards, each with user avatar, image placeholder, caption, like count.","✏️ Make the Follow button toggle between Follow/Following with style change.","✏️ Add a Stories horizontal scroll at the top of the feed.","✏️ Push to GitHub. Share the Expo Snack link."]},
+]},
+
+{label:"Week 6-7 — Navigation",days:[
+{day:"Day 36-37",topic:"React Navigation — Stack + Tabs",
+ what:"Install React Navigation, NavigationContainer, Stack Navigator, Bottom Tab Navigator, Drawer.",
+ why:"Navigation is the skeleton of every multi-screen app. Learn it deeply.",
+ uses:"Every app. Home → Product → Cart → Checkout is a Stack. Instagram tabs = Bottom Tabs.",
+ en:[YS("react navigation complete tutorial 2024","notJust.dev"),YS("react navigation stack tab drawer guide","Simon Grimm")],
+ hi:[HI("react navigation hindi tutorial 2024","WsCube Tech"),HI("react native navigation hindi","Thapa Technical")],
+ docs:[D("React Navigation — Official Docs","reactnavigation.org","https://reactnavigation.org/docs/getting-started"),D("React Navigation — Stack Navigator","reactnavigation.org","https://reactnavigation.org/docs/stack-navigator/"),D("React Navigation — Bottom Tabs","reactnavigation.org","https://reactnavigation.org/docs/bottom-tab-navigator/")],
+ practice:["✏️ Set up 4 bottom tabs: Home, Search, Cart, Profile — each with a placeholder screen.","✏️ Add a Stack inside Home tab: HomeList → HomeDetail (tap an item to navigate).","✏️ Pass a product ID as param to detail screen. Display it on the detail screen.","✏️ Add icons to tab bar using @expo/vector-icons.","✏️ Add a badge count on the Cart tab icon (e.g., '3 items')."]},
+
+{day:"Day 38",topic:"Passing Params & Navigation Patterns",
+ what:"route.params, navigation.navigate(), goBack(), push(), reset(), deep linking intro.",
+ why:"Screens need data context. Params carry it. Navigation control builds flows.",
+ uses:"Product ID → detail, user ID → profile, order ID → tracking.",
+ en:[YS("react navigation passing params between screens","The Net Ninja")],
+ hi:[HI("react navigation params hindi tutorial","WsCube Tech")],
+ docs:[D("React Navigation — Params","reactnavigation.org","https://reactnavigation.org/docs/params/"),D("React Navigation — Navigating","reactnavigation.org","https://reactnavigation.org/docs/navigating/")],
+ practice:["✏️ ProductList → tap → ProductDetail screen showing that product's name + price.","✏️ Add a 'Go Back' button on detail screen with custom label.","✏️ Add a 'Close' icon in the header that resets to Home tab.","✏️ Pass 3 params: id, name, category — display all 3 on detail screen.","✏️ Build an auth flow: if isLoggedIn → AppNavigator, else → AuthNavigator."]},
+]},
+
+{label:"Week 8 — APIs, Data & Firebase",days:[
+{day:"Day 39-40",topic:"Fetch API + Axios + Loading States",
+ what:"fetch() built-in, Axios library, GET/POST, loading state, error state, retry logic.",
+ why:"Without API data, your app is just a demo. Data from internet = real app.",
+ uses:"Products, news, weather, users, messages — all from APIs.",
+ en:[YS("react native api fetch axios tutorial","notJust.dev"),YS("react native data fetching loading error states","Simon Grimm")],
+ hi:[HI("react native api call hindi fetch axios","WsCube Tech")],
+ docs:[D("Axios — Official Docs","axios-http.com","https://axios-http.com/docs/intro"),D("RN — Network","reactnative.dev","https://reactnative.dev/docs/network"),F("reqres.in — Free Test API","reqres.in","https://reqres.in/")],
+ practice:["✏️ Fetch 10 products from fakestoreapi.com. Display in FlatList with image + price.","✏️ Add a 3-state UI: loading spinner → data list → error with 'Try Again' button.","✏️ POST to JSONPlaceholder/posts: send a new post object, log the response.","✏️ Use Axios with a base URL configured. Add auth header.","✏️ Add search that calls API with query param: ?search=shirt."]},
+
+{day:"Day 41",topic:"AsyncStorage — Local Data",
+ what:"@react-native-async-storage/async-storage: setItem, getItem, removeItem, multiGet.",
+ why:"Users shouldn't lose data when they close the app. Persistence = great UX.",
+ uses:"Auth token, user preferences, draft messages, recently viewed, favorites.",
+ en:[YS("react native asyncstorage tutorial expo","Simon Grimm")],
+ hi:[HI("react native asyncstorage hindi tutorial","WsCube Tech")],
+ docs:[D("Expo — AsyncStorage","docs.expo.dev","https://docs.expo.dev/versions/latest/sdk/async-storage/")],
+ practice:["✏️ Save user's name in AsyncStorage. Retrieve on app start and show greeting.","✏️ Save/load a list of favorite products. Persist across restarts.","✏️ Build a 'Remember Me' feature for login that stores email in AsyncStorage.","✏️ Clear all storage on 'Logout' button press.","✏️ Store and retrieve a theme preference ('dark'/'light') on every launch."]},
+
+{day:"Day 42-43",topic:"Firebase — Auth + Firestore",
+ what:"Firebase setup, email/password auth, onAuthStateChanged, Firestore CRUD, real-time listeners.",
+ why:"Firebase = instant backend. Build production apps without writing a server.",
+ uses:"Every app with user accounts + data storage.",
+ en:[YS("firebase react native expo authentication firestore 2024","Simon Grimm"),YS("react native firebase full tutorial","notJust.dev")],
+ hi:[HI("react native firebase hindi tutorial auth","WsCube Tech"),HI("firebase react native hindi setup","CodeWithHarry")],
+ docs:[D("Firebase — Getting Started","firebase.google.com","https://firebase.google.com/docs/"),D("Firestore — Docs","firebase.google.com","https://firebase.google.com/docs/firestore"),D("Firebase Auth — Docs","firebase.google.com","https://firebase.google.com/docs/auth")],
+ practice:["✏️ Create Firebase project, connect to Expo app.","✏️ Implement register + login + logout with email/password.","✏️ Show different screens based on auth state (logged in vs logged out).","✏️ Save user's profile data to Firestore on registration.","✏️ Fetch and display user's data from Firestore on the Profile screen."]},
+
+{day:"Day 44",topic:"Month 2 Project — News Reader App",
+ what:"Multi-screen news app: tab nav, fetch articles, FlatList, detail screen, save favorites to AsyncStorage.",
+ why:"First complete multi-screen real-data app — your second portfolio piece.",
+ uses:"Shows API + navigation + persistence skills in one project.",
+ en:[YS("react native news app build tutorial 2024","notJust.dev"),YS("react native full app beginner project","JavaScript Mastery")],
+ hi:[HI("react native news app hindi build","WsCube Tech")],
+ docs:[F("NewsAPI — Free Articles","newsapi.org","https://newsapi.org/"),F("GNews API — Free Alternative","gnews.io","https://gnews.io/")],
+ practice:["✏️ 3 Tabs: Top News, Technology, Sports — each fetches its own category.","✏️ Tap article → detail screen with full title, image, description, 'Read More' link.","✏️ Bookmark button saves to AsyncStorage. 'Saved' tab shows bookmarked articles.","✏️ Add pull-to-refresh on each tab.","✏️ Push to GitHub. Write a proper README with screenshots."]},
+]},
+]},
+
+/* ═══ MONTH 3 ═══ */
+{title:"UI Polish, Animations & Device Features",color:"#6af7d4",tag:"UI & Native",
+desc:"Build premium UIs with animations, access camera/GPS/notifications, and integrate Firebase backend.",
+tip:"Study real apps for design inspiration. Screenshot UI you love and try to recreate it. The gap between beginner and senior developer is mostly polish and attention to detail.",
+weeks:[
+{label:"Week 9 — Premium UI Design",days:[
+{day:"Day 57",topic:"Design System & Custom Components",
+ what:"Build a component library: Button variants, Card, Input, Avatar, Badge, Chip, Divider.",
+ why:"Consistent design + zero code repetition. Carry this library to every project.",
+ uses:"Every professional app has a design system. This is yours.",
+ en:[YS("react native custom component library design system","notJust.dev"),YS("react native reusable components ui kit","Simon Grimm")],
+ hi:[HI("react native custom components hindi design system","WsCube Tech")],
+ docs:[D("NativeBase — UI Library","nativebase.io","https://nativebase.io/"),D("RN Paper — Material UI","callstack.github.io","https://callstack.github.io/react-native-paper/"),D("Gluestack — New UI Library","gluestack.io","https://gluestack.io/")],
+ practice:["✏️ Build Button component with 3 variants: primary, secondary, danger. Accept size prop (sm/md/lg).","✏️ Build Card component with title, subtitle, image, children, onPress.","✏️ Build Input component with label, error message, icon, value, onChange props.","✏️ Build Avatar with image + initials fallback when no image.","✏️ Create a component showcase screen with all your components displayed."]},
+
+{day:"Day 58",topic:"Fonts, Icons & Typography",
+ what:"expo-font, useFonts, Google Fonts, @expo/vector-icons, typography scale.",
+ why:"Typography is 80% of visual quality. Custom fonts transform mediocre to premium.",
+ uses:"Every screen: headers, body text, labels, captions — all use your type system.",
+ en:[YS("react native custom fonts expo google fonts","Simon Grimm"),YS("react native icons expo vector icons tutorial","Simon Grimm")],
+ hi:[HI("react native fonts icons hindi expo","WsCube Tech")],
+ docs:[D("Expo — Fonts Guide","docs.expo.dev","https://docs.expo.dev/develop/user-interface/fonts/"),D("Expo Icons Explorer","icons.expo.fyi","https://icons.expo.fyi/"),F("Google Fonts — Free","fonts.google.com","https://fonts.google.com/")],
+ practice:["✏️ Load 2 Google Fonts (one serif, one sans). Apply to different text elements.","✏️ Create a typography constants file: FONT_SIZES, FONT_WEIGHTS, LINE_HEIGHTS.","✏️ Use Ionicons for 10 different icons: home, heart, search, settings, camera, etc.","✏️ Create a themed icon+label pair component for a settings list item.","✏️ Show a loading screen with a Lottie placeholder while fonts load."]},
+
+{day:"Day 59",topic:"Dark Mode & Theming",
+ what:"useColorScheme, ThemeContext, dynamic colors, platform-specific values.",
+ why:"Dark mode is a standard expectation. Theming makes future updates easy.",
+ uses:"Full app switches colors, fonts, borders based on system or user toggle.",
+ en:[YS("react native dark mode implementation 2024","Simon Grimm"),YS("react native theming context api","notJust.dev")],
+ hi:[HI("react native dark mode hindi tutorial","WsCube Tech")],
+ docs:[D("RN — Appearance API","reactnative.dev","https://reactnative.dev/docs/appearance"),D("RN — useColorScheme","reactnative.dev","https://reactnative.dev/docs/usecolorscheme")],
+ practice:["✏️ Detect system color scheme and log it: 'dark' or 'light'.","✏️ Create a COLORS object with light and dark variants for each color.","✏️ Add a manual toggle button that switches between dark/light ignoring system setting.","✏️ Persist user's theme preference to AsyncStorage.","✏️ Apply theme to 3 screens: background, text, card, border all change correctly."]},
+
+{day:"Day 60",topic:"Linear Gradients & Visual Effects",
+ what:"expo-linear-gradient, gradient overlays on images, blur effects, shadow styling.",
+ why:"Gradients and depth effects separate amateur from professional UI.",
+ uses:"Hero sections, card overlays, onboarding, splash, header backgrounds.",
+ en:[YS("react native linear gradient expo tutorial","Simon Grimm")],
+ hi:[HI("react native gradient effects hindi expo","WsCube Tech")],
+ docs:[D("expo-linear-gradient — Docs","docs.expo.dev","https://docs.expo.dev/versions/latest/sdk/linear-gradient/"),D("expo-blur — Docs","docs.expo.dev","https://docs.expo.dev/versions/latest/sdk/blur-view/")],
+ practice:["✏️ Add a purple→pink gradient as a screen header background.","✏️ Overlay a dark gradient on a cover image so white text is readable.","✏️ Create a premium 'Pro' badge with gold gradient background.","✏️ Build an onboarding slide with full-screen gradient + icon + title + subtitle.","✏️ Add a BlurView behind a modal to blur the content beneath it."]},
+
+{day:"Day 61-63",topic:"Build: Premium E-Commerce Product Screen",
+ what:"Product image carousel, gradient overlay, price, rating stars, reviews list, quantity selector, Add to Cart.",
+ why:"Combines all UI techniques into one impressive portfolio screen.",
+ uses:"Any marketplace, fashion, food, or product app.",
+ en:[YS("react native ecommerce product screen ui build","notJust.dev"),YS("react native product detail page tutorial","JavaScript Mastery")],
+ hi:[HI("react native product screen hindi build","WsCube Tech")],
+ docs:[F("Fake Store API — Product Data","fakestoreapi.com","https://fakestoreapi.com/")],
+ practice:["✏️ Image carousel: swipeable images with dot indicators.","✏️ Star rating: render 1-5 stars dynamically from data, filled/empty based on rating.","✏️ Quantity selector: + / - buttons, can't go below 1.","✏️ Size selector: tap to select a size, selected = highlighted.","✏️ Add to Cart animation: button pulses and cart count increments."]},
+]},
+
+{label:"Week 10 — Animations",days:[
+{day:"Day 64-65",topic:"Animated API + Reanimated 2",
+ what:"Animated.Value, timing, spring, Reanimated useSharedValue, useAnimatedStyle, withSpring.",
+ why:"Animations are the difference between amateur and polished professional apps.",
+ uses:"Screen transitions, button feedback, skeleton loading, scroll-linked effects.",
+ en:[YS("react native animations animated api beginners","notJust.dev"),YS("react native reanimated 2 tutorial beginners","William Candillon")],
+ hi:[HI("react native animations hindi tutorial","WsCube Tech")],
+ docs:[D("RN — Animations Guide","reactnative.dev","https://reactnative.dev/docs/animations"),D("Reanimated 3 — Official Docs","docs.swmansion.com","https://docs.swmansion.com/react-native-reanimated/")],
+ practice:["✏️ Fade in a screen on mount using Animated.timing.","✏️ Slide up a bottom sheet using Animated translateY.","✏️ Scale a like button: press → scale to 1.3, release → back to 1.0.","✏️ Reanimated: create a bouncing ball with withRepeat + withSpring.","✏️ Animated header that shrinks as you scroll down (scroll-linked value)."]},
+
+{day:"Day 66",topic:"Gesture Handler & Swipeable UI",
+ what:"react-native-gesture-handler: PanGestureHandler, swipe detection, Swipeable list items.",
+ why:"Mobile is gesture-first. Swipe to delete is standard UX.",
+ uses:"Delete on swipe, drag items, swipe to reveal actions.",
+ en:[YS("react native gesture handler swipeable tutorial","William Candillon"),YS("react native swipe to delete gesture","notJust.dev")],
+ hi:[],
+ docs:[D("Gesture Handler — Docs","docs.swmansion.com","https://docs.swmansion.com/react-native-gesture-handler/"),D("Reanimated — Gesture Combo","docs.swmansion.com","https://docs.swmansion.com/react-native-reanimated/")],
+ practice:["✏️ Build a todo list where each item can be swiped left to reveal Delete button.","✏️ Add swipe-right to mark item as complete (green background reveal).","✏️ Build a deck of cards where each card can be dragged off screen.","✏️ Add snap-back animation when swipe doesn't go far enough."]},
+
+{day:"Day 67-68",topic:"Lottie Animations & Skeleton Screens",
+ what:"lottie-react-native for JSON animations, shimmer skeleton screens with LinearGradient.",
+ why:"Lottie = designer-quality animation in 5 lines. Skeleton = better UX than spinners.",
+ uses:"Onboarding, success/error states, empty states, loading placeholders.",
+ en:[YS("react native lottie animations tutorial","Simon Grimm"),YS("react native skeleton loading shimmer","Simon Grimm")],
+ hi:[],
+ docs:[D("lottie-react-native — GitHub","github.com","https://github.com/lottie-react-native/lottie-react-native"),F("LottieFiles — Free Animations","lottiefiles.com","https://lottiefiles.com/")],
+ practice:["✏️ Download a success Lottie animation. Show it on 'Order Placed' screen.","✏️ Add a loading Lottie instead of ActivityIndicator on your data screen.","✏️ Build skeleton cards (3 of them) for your product list loading state.","✏️ Add a Lottie empty state: 'No results found' with an animation."]},
+
+{day:"Day 69-70",topic:"Build: Animated Onboarding Flow",
+ what:"3-step onboarding with Reanimated slide transitions, Lottie per slide, skip, progress dots.",
+ why:"Onboarding = first 30 seconds of user experience. Animated = professional.",
+ uses:"Every app with a first-run experience needs this.",
+ en:[YS("react native animated onboarding screens tutorial","notJust.dev"),YS("react native onboarding reanimated","Simon Grimm")],
+ hi:[HI("react native onboarding screen hindi","WsCube Tech")],
+ docs:[],
+ practice:["✏️ 3 slides with slide transition (not a tab switch — animate the translation).","✏️ Progress dots at bottom that fill as user advances.","✏️ Skip button jumps to last slide or closes onboarding.","✏️ Save onboarding completion to AsyncStorage — never show again.","✏️ Get Next button design — it should pulse subtly to draw attention."]},
+]},
+
+{label:"Week 11-12 — Device Features + Firebase",days:[
+{day:"Day 71-72",topic:"Camera, Photos & Location",
+ what:"expo-image-picker (camera/gallery), expo-location (GPS coords), react-native-maps (map display).",
+ why:"Location + camera are in delivery, social, fitness, marketplace apps.",
+ uses:"Profile photo, product image upload, map with user location, nearby places.",
+ en:[YS("expo image picker camera tutorial react native","Simon Grimm"),YS("react native maps expo location tutorial","notJust.dev")],
+ hi:[HI("react native camera location hindi expo","WsCube Tech")],
+ docs:[D("expo-image-picker — Docs","docs.expo.dev","https://docs.expo.dev/versions/latest/sdk/imagepicker/"),D("expo-location — Docs","docs.expo.dev","https://docs.expo.dev/versions/latest/sdk/location/"),D("react-native-maps — Docs","github.com","https://github.com/react-native-maps/react-native-maps")],
+ practice:["✏️ Implement profile photo picker: tap avatar → choose camera or gallery.","✏️ Get user's lat/lng and display it on screen.","✏️ Show user's current location as a blue dot on a map.","✏️ Add a map marker for 5 hardcoded 'nearby places' on the map.","✏️ Request and handle permission denied gracefully with a clear message."]},
+
+{day:"Day 73-74",topic:"Push & Local Notifications",
+ what:"expo-notifications: push token, sendNotification, scheduleNotification, notification handler.",
+ why:"Notifications = #1 re-engagement driver. Every serious app uses them.",
+ uses:"Order ready, new message, daily reminder, sale alert, habit trigger.",
+ en:[YS("expo notifications push local react native 2024","Simon Grimm")],
+ hi:[HI("react native notifications hindi expo","WsCube Tech")],
+ docs:[D("expo-notifications — Docs","docs.expo.dev","https://docs.expo.dev/push-notifications/overview/")],
+ practice:["✏️ Request notification permission on app start.","✏️ Schedule a local notification 10 seconds from now: 'Your pizza is ready!'","✏️ Create a daily reminder: same time every day.","✏️ Cancel all scheduled notifications when user disables reminders.","✏️ Handle notification tap: navigate to specific screen."]},
+
+{day:"Day 75-84",topic:"Firebase Complete Integration + Month 3 Project — Chat App",
+ what:"Firestore real-time, Storage image upload, Security Rules, then build a full chat app.",
+ why:"Real-time + auth + storage is the most in-demand skill combination for RN.",
+ uses:"Chat is in nearly every app: social, marketplace, support, dating.",
+ en:[YS("react native firebase chat app full build 2024","notJust.dev"),YS("react native realtime chat firebase","Simon Grimm")],
+ hi:[HI("react native chat app hindi firebase build","WsCube Tech")],
+ docs:[D("Firestore — Realtime updates","firebase.google.com","https://firebase.google.com/docs/firestore/query-data/listen"),D("Firebase Storage — Docs","firebase.google.com","https://firebase.google.com/docs/storage"),D("Firestore Security Rules","firebase.google.com","https://firebase.google.com/docs/firestore/security/get-started")],
+ practice:["✏️ Auth: register/login, onAuthStateChanged controls navigation.","✏️ Firestore: send messages, real-time listener updates list.","✏️ Upload image from camera to Firebase Storage, send URL as message.","✏️ Show online/offline indicator per user.","✏️ Security Rules: users can only read/write their own messages.","✏️ Push to GitHub + write README with screenshots."]},
+]},
+]},
+
+/* ═══ MONTH 4 ═══ */
+{title:"Advanced State, Performance & TypeScript",color:"#f7c26a",tag:"Advanced",
+desc:"Redux Toolkit, Zustand, React Query, performance optimization, TypeScript, testing — professional-level skills.",
+tip:"Month 4 is challenging. Every topic here appears in job interviews. Write code for EVERY concept — don't just watch. Build small examples before applying to big projects.",
+weeks:[
+{label:"Week 13 — State Management",days:[
+{day:"Day 85-91",topic:"Redux Toolkit + Zustand + React Query",
+ what:"RTK store/slices/thunks, Zustand create(), TanStack useQuery/useMutation, comparison of all three.",
+ why:"The holy trinity of state management. Different tools for different problems.",
+ uses:"Cart/filters (RTK), simple global state (Zustand), server data (React Query).",
+ en:[YS("redux toolkit complete tutorial 2024","Academind"),YS("zustand state management react native","Traversy Media"),YS("react query tanstack complete course","Web Dev Simplified")],
+ hi:[HI("redux toolkit hindi tutorial complete","CodeWithHarry"),HI("zustand hindi state management","Thapa Technical")],
+ docs:[D("Redux Toolkit — Official Docs","redux-toolkit.js.org","https://redux-toolkit.js.org/"),D("Zustand — GitHub","github.com","https://github.com/pmndrs/zustand"),D("TanStack Query — Docs","tanstack.com","https://tanstack.com/query/latest/docs/framework/react/overview")],
+ practice:["✏️ RTK: Shopping cart with add, remove, update quantity, calculate total.","✏️ RTK Async: fetch products from API with createAsyncThunk, handle loading/error states.","✏️ Zustand: create a dark mode store, a notification count store.","✏️ React Query: fetch users, auto-refetch every 30s, show 'Updating...' indicator.","✏️ React Query: useMutation for POST request with optimistic update.","✏️ Compare: build the same cart feature using all 3 tools. Notice the differences."]},
+]},
+{label:"Week 14-16 — Performance, TypeScript & Testing",days:[
+{day:"Day 92-98",topic:"Performance Optimization",
+ what:"React.memo, useMemo, useCallback, FlatList tuning, Hermes engine, image optimization, offline.",
+ why:"Slow apps get 1-star reviews. Optimization is a professional responsibility.",
+ uses:"Production apps with 10,000+ users can't afford lag.",
+ en:[YS("react native performance optimization 2024","notJust.dev"),YS("react memo usememo usecallback tutorial","Web Dev Simplified")],
+ hi:[HI("react native performance hindi optimization","WsCube Tech")],
+ docs:[D("RN — Performance Guide","reactnative.dev","https://reactnative.dev/docs/performance"),D("RN — Hermes Engine","reactnative.dev","https://reactnative.dev/docs/hermes"),D("RN — FlatList Config","reactnative.dev","https://reactnative.dev/docs/optimizing-flatlist-configuration")],
+ practice:["✏️ Wrap an expensive component in React.memo. Use React DevTools profiler to confirm fewer renders.","✏️ Use useMemo for a sorted + filtered product list. Log to confirm it doesn't recalculate on unrelated renders.","✏️ Enable Hermes in app.json. Measure startup time before and after.","✏️ Add NetInfo to show an offline banner when user loses internet.","✏️ Tune a FlatList with 500 items: add getItemLayout, initialNumToRender, windowSize. Feel the difference."]},
+
+{day:"Day 99-105",topic:"TypeScript in React Native",
+ what:"Types, interfaces, generics, typing props/state/navigation/API responses, strict mode.",
+ why:"TypeScript is required at 90%+ of professional companies. Prevents runtime bugs.",
+ uses:"Every file in every professional React Native project.",
+ en:[YS("typescript react native complete tutorial","Simon Grimm"),YS("typescript crash course beginners","Traversy Media")],
+ hi:[HI("typescript hindi tutorial complete","CodeWithHarry"),HI("typescript hindi beginners thapa","Thapa Technical")],
+ docs:[D("TypeScript — Official Docs","typescriptlang.org","https://www.typescriptlang.org/docs/"),D("RN — TypeScript Guide","reactnative.dev","https://reactnative.dev/docs/typescript"),D("TS Handbook — Basics","typescriptlang.org","https://www.typescriptlang.org/docs/handbook/2/basic-types.html")],
+ practice:["✏️ Convert your Month 1 JS product objects to TypeScript interfaces.","✏️ Type a React component's props: ProductCard({ name: string, price: number, inStock: boolean }).","✏️ Type useState: const [items, setItems] = useState<Product[]>([]).","✏️ Type a function: getDiscountedPrice(price: number, percent: number): number.","✏️ Type an API response: define User interface matching JSONPlaceholder /users response.","✏️ Migrate one complete screen to TypeScript."]},
+
+{day:"Day 106-112",topic:"Testing + Month 4 Project",
+ what:"Jest unit tests, @testing-library/react-native component tests, then build full E-Commerce app.",
+ why:"Tests = professional credibility. The E-Commerce project = portfolio centerpiece.",
+ uses:"Every job application will see this project.",
+ en:[YS("react native testing jest tutorial","Web Dev Simplified"),YS("react native full ecommerce app build 2024","notJust.dev")],
+ hi:[HI("react native testing hindi jest","WsCube Tech"),HI("react native ecommerce project hindi","WsCube Tech")],
+ docs:[D("Jest — Official Docs","jestjs.io","https://jestjs.io/docs/getting-started"),D("Testing Library — RN","callstack.github.io","https://callstack.github.io/react-native-testing-library/")],
+ practice:["✏️ Write 5 unit tests for your utility functions (formatPrice, validateEmail, etc.).","✏️ Write a component test: render <ProductCard /> and check it shows the title.","✏️ Write a test that simulates button press and checks state changes.","✏️ E-Commerce App: Products list (RTK) → Detail → Cart → Checkout → Orders → Profile.","✏️ TypeScript entire project. Add tests for cart logic. Publish to both stores."]},
+]},
+]},
+
+/* ═══ MONTH 5 ═══ */
+{title:"Publishing, Monetization & Production",color:"#6ab4f7",tag:"Production",
+desc:"Publish to App Store + Google Play, add RevenueCat subscriptions, Stripe payments, analytics, crash reporting.",
+tip:"Month 5 turns skills into income. Most developers NEVER publish an app. By the end of this month you will be in the top 5% of React Native learners. Push through every step.",
+weeks:[
+{label:"Week 17-20 — Publishing Pipeline",days:[
+{day:"Day 113-120",topic:"EAS Build + App Store + Play Store",
+ what:"App icons, splash screen, EAS build for iOS/Android, App Store Connect, Google Play Console, OTA updates.",
+ why:"Published app = real proof of skill. No employer can argue with a live store listing.",
+ uses:"Every app you ship. Do this process once properly, repeat it in minutes.",
+ en:[YS("react native expo eas build submit app store google play 2024","Simon Grimm"),YS("publish react native app app store 2024","notJust.dev")],
+ hi:[HI("react native app publish hindi app store play store","WsCube Tech")],
+ docs:[D("EAS Build — Docs","docs.expo.dev","https://docs.expo.dev/build/introduction/"),D("EAS Submit — Docs","docs.expo.dev","https://docs.expo.dev/submit/introduction/"),D("EAS Update — OTA Docs","docs.expo.dev","https://docs.expo.dev/eas-update/introduction/"),D("Apple — App Store Connect","developer.apple.com","https://developer.apple.com/help/app-store-connect/"),D("Google — Play Console Help","support.google.com","https://support.google.com/googleplay/android-developer/")],
+ practice:["✏️ Generate app icons at all required sizes using EasyAppIcon.","✏️ Configure app.json: name, version, bundleIdentifier, scheme.","✏️ Run: eas build --platform android. Download and install the APK on your phone.","✏️ Create App Store Connect listing with screenshots and description.","✏️ Submit via: eas submit --platform ios","✏️ Push a small fix, run eas update — verify OTA updates work without resubmitting."]},
+
+{day:"Day 121-127",topic:"Monetization — RevenueCat + Stripe + AdMob",
+ what:"RevenueCat subscriptions, Stripe one-time payments, Google AdMob ads, in-app purchases.",
+ why:"This is how your app makes money. Real apps need real revenue.",
+ uses:"SaaS subscription, marketplace payment, ad-supported free app.",
+ en:[YS("revenuecat react native subscriptions tutorial","Simon Grimm"),YS("stripe payments react native tutorial","notJust.dev"),YS("admob react native ads tutorial","Simon Grimm")],
+ hi:[HI("react native monetization hindi subscriptions","WsCube Tech")],
+ docs:[D("RevenueCat — RN Docs","docs.revenuecat.com","https://www.revenuecat.com/docs/getting-started/installation/reactnative"),D("Stripe — RN Docs","docs.stripe.com","https://docs.stripe.com/payments/accept-a-payment?platform=react-native"),D("Google AdMob — Docs","developers.google.com","https://developers.google.com/admob")],
+ practice:["✏️ RevenueCat: set up a $4.99/month subscription. Show paywall screen to free users.","✏️ Gate a feature: only Pro users see 'Advanced Analytics' section.","✏️ Stripe: implement a one-time $9.99 'Lifetime Access' purchase.","✏️ AdMob: show a banner ad at the bottom for free users only.","✏️ Track revenue analytics: how many conversions from free → paid?"]},
+
+{day:"Day 128-134",topic:"Analytics, Crash Reporting & Advanced Features",
+ what:"Firebase Analytics events, Sentry crash reporting, Google/Apple Sign-In, Biometrics, QR scanner.",
+ why:"You can't grow without measuring. You can't fix crashes you don't know about.",
+ uses:"Every production app needs all of these before launch.",
+ en:[YS("firebase analytics react native tutorial","notJust.dev"),YS("sentry crash reporting react native","Simon Grimm"),YS("google apple sign in expo react native","Simon Grimm")],
+ hi:[HI("react native analytics crash reporting hindi","WsCube Tech")],
+ docs:[D("Firebase Analytics — Docs","firebase.google.com","https://firebase.google.com/docs/analytics"),D("Sentry — RN Docs","docs.sentry.io","https://docs.sentry.io/platforms/react-native/"),D("expo-local-authentication","docs.expo.dev","https://docs.expo.dev/versions/latest/sdk/local-authentication/")],
+ practice:["✏️ Log 5 custom events: product_viewed, add_to_cart, purchase_started, login, share_clicked.","✏️ Deliberately throw an error and verify it appears in Sentry dashboard.","✏️ Add Google Sign-In button to login screen.","✏️ Add Face ID / fingerprint lock to app open.","✏️ Build a QR code scanner that navigates to a product page."]},
+
+{day:"Day 135-140",topic:"Month 5 Project — Publish YOUR App",
+ what:"Pick your strongest project, polish it completely, add analytics + crash reporting, publish to BOTH stores.",
+ why:"A live app on both stores = your most powerful career credential.",
+ uses:"Direct link in resume, LinkedIn, portfolio, freelance proposals.",
+ en:[YS("publish app store google play full guide 2024","Simon Grimm"),YS("app store optimization aso guide developers","App Masters")],
+ hi:[HI("app store publish karna hindi guide","WsCube Tech")],
+ docs:[F("App Store Review Guidelines","developer.apple.com","https://developer.apple.com/app-store/review/guidelines/"),F("Play Store Policy","play.google.com","https://play.google.com/about/developer-content-policy/"),F("Hotpot Screenshot Maker","hotpot.ai","https://hotpot.ai/app-screenshot-maker")],
+ practice:["✏️ Record a 60-second demo video of your app.","✏️ Write an ASO-optimized description (title, subtitle, keywords).","✏️ Create 5 store screenshots in correct dimensions.","✏️ Submit for review and handle any rejection feedback.","✏️ Share on LinkedIn, Reddit r/reactnative, Twitter — celebrate this milestone!"]},
+]},
+]},
+
+/* ═══ MONTH 6 ═══ */
+{title:"Capstone Project, Portfolio & Career Launch",color:"#f76a6a",tag:"Career",
+desc:"Build your signature capstone app, build a professional portfolio, prepare for technical interviews, and launch your career.",
+tip:"One great project beats 50 mediocre ones. Your capstone is what you'll show in every interview. Make it something you're genuinely proud of and would actually use.",
+weeks:[
+{label:"Week 21-22 — Capstone Build",days:[
+{day:"Day 141-156",topic:"Capstone App — Full Build & Publish",
+ what:"Full-scale production app using ALL skills from Months 1-5: TypeScript, Redux/Zustand, Firebase, payments, analytics, published to both stores.",
+ why:"This is your #1 portfolio piece and the proof of everything you've learned.",
+ uses:"Every job application, every freelance client, every investor conversation.",
+ en:[YS("react native full stack app build 2024 beginners","notJust.dev"),YS("react native complete app expo 2024 typescript","JavaScript Mastery"),YS("react native food delivery app full build","notJust.dev")],
+ hi:[HI("react native full app build hindi 2024","WsCube Tech"),HI("react native complete project hindi beginners","Thapa Technical")],
+ docs:[D("Expo Router — New Navigation","docs.expo.dev","https://docs.expo.dev/router/introduction/"),D("Supabase — Firebase Alternative","supabase.com","https://supabase.com/docs"),D("Clerk — Auth Alternative","clerk.com","https://clerk.com/docs")],
+ practice:["✏️ Day 141: Write a 1-page app spec: features, screens, tech stack, data model.","✏️ Day 142: Set up project with TypeScript, navigation, folder structure, design system.","✏️ Days 143-148: Build all core screens and features.","✏️ Days 149-151: Polish UI — animations, loading states, error states, empty states.","✏️ Days 152-154: Write unit tests for core logic. QA on multiple devices.","✏️ Days 155-156: Publish to both stores. Record demo video. Write README."]},
+]},
+{label:"Week 23-24 — Portfolio & Career Launch",days:[
+{day:"Day 157-160",topic:"GitHub, Portfolio Website & LinkedIn",
+ what:"GitHub profile README, pinned repos with detailed READMEs, React portfolio website, LinkedIn optimization.",
+ why:"GitHub = your code resume. Portfolio = your work resume. LinkedIn = where recruiters find you.",
+ uses:"Every job application, every freelance inquiry, every networking conversation.",
+ en:[YS("developer portfolio website react build 2024","JavaScript Mastery"),YS("github profile readme tutorial developers","Traversy Media")],
+ hi:[HI("portfolio website react hindi build","CodeWithHarry"),HI("github profile setup hindi developers","CodeWithHarry")],
+ docs:[F("GitHub Profile README Generator","rahuldkjain.github.io","https://rahuldkjain.github.io/gh-profile-readme-generator/"),F("Vercel — Free Hosting","vercel.com","https://vercel.com/"),F("GitHub Pages — Free","pages.github.com","https://pages.github.com/")],
+ practice:["✏️ GitHub: Add profile README with your photo, skills, projects, social links.","✏️ Each repo: Add README with screenshots, tech stack, installation steps, live link.","✏️ Portfolio site: hero, about, skills (icons), projects with app store links, contact.","✏️ LinkedIn: update headline, add 'React Native Developer' to title, showcase apps.","✏️ Record 60-second demo video for each app. Upload to YouTube (unlisted is fine)."]},
+
+{day:"Day 161-166",topic:"Technical Interview Preparation",
+ what:"JS fundamentals (closures, event loop, async), React/RN hooks, Redux, system design, behavioral questions.",
+ why:"Great projects + interview skills = job. One without the other is not enough.",
+ uses:"Every phone screen, technical round, system design interview.",
+ en:[YS("react native interview questions answers 2024","notJust.dev"),YS("javascript interview questions top 50","Traversy Media"),YS("react hooks interview questions explained","Web Dev Simplified")],
+ hi:[HI("react native interview questions hindi 2024","WsCube Tech"),HI("javascript interview questions hindi answers","CodeWithHarry")],
+ docs:[F("LeetCode — Easy JS Problems","leetcode.com","https://leetcode.com/problemset/all/?difficulty=Easy&page=1"),F("Pramp — Free Mock Interviews","pramp.com","https://www.pramp.com/"),F("interviewing.io — Practice","interviewing.io","https://interviewing.io/")],
+ practice:["✏️ Answer out loud (record yourself): What is closure? Event loop? useState vs useReducer?","✏️ System design: 'Design Uber's map screen' — draw the data flow and component tree.","✏️ Do 5 LeetCode Easy problems in JavaScript.","✏️ Mock interview with a friend or on Pramp.","✏️ Write your 'Tell me about yourself' answer as a developer story. Practice 3x.","✏️ Research salary ranges in your city for React Native developer roles."]},
+
+{day:"Day 167-172",topic:"Job Applications & Freelancing",
+ what:"1-page developer resume, apply to 5 jobs/day, Upwork profile, proposal writing, network on LinkedIn.",
+ why:"Consistency compounds. 5 applications/day for 30 days = 150 shots at opportunity.",
+ uses:"Your first job or freelance client. This is the final skill to learn.",
+ en:[YS("how to get first developer job 2024","Traversy Media"),YS("freelance react native developer how to start","notJust.dev")],
+ hi:[HI("developer job kaise payen hindi india 2024","CodeWithHarry"),HI("freelancing kaise start kare hindi developers","WsCube Tech")],
+ docs:[F("Upwork — Freelance Jobs","upwork.com","https://www.upwork.com/"),F("LinkedIn Jobs — RN","linkedin.com","https://www.linkedin.com/jobs/react-native-developer-jobs/"),F("Indeed — RN Jobs","indeed.com","https://www.indeed.com/jobs?q=react+native+developer"),F("Toptal — Top 3% Freelancers","toptal.com","https://www.toptal.com/react-native")],
+ practice:["✏️ Build your 1-page resume. Show it to 3 developers for feedback.","✏️ Apply to 5 React Native jobs today. Set a daily alarm to apply 5 more.","✏️ Set up Upwork profile with portfolio items + hourly rate.","✏️ Write a proposal for a sample project posting — get feedback.","✏️ DM 3 developers you admire on LinkedIn. Ask one thoughtful question each."]},
+
+{day:"Day 173-180",topic:"Community, Growth & What's Next",
+ what:"Join RN communities, plan next 6 months (advanced native modules, AI features, SaaS), share your journey.",
+ why:"Career is long. The community + continuous learning = compounding advantage.",
+ uses:"Referrals, collaborations, staying current, mentorship, inspiration.",
+ en:[YS("react native developer career growth 2024","notJust.dev")],
+ hi:[HI("developer career growth hindi after first job","CodeWithHarry")],
+ docs:[F("r/reactnative — Reddit","reddit.com","https://www.reddit.com/r/reactnative/"),F("React Native Community GitHub","github.com","https://github.com/react-native-community"),F("Expo Discord — Join","chat.expo.dev","https://chat.expo.dev/"),F("React Native Discord","discord.gg","https://discord.gg/react-native"),F("Dev.to — Write & Share","dev.to","https://dev.to/")],
+ practice:["✏️ Write a LinkedIn post: '6 months ago I had zero coding knowledge. Today I have 3 apps on the App Store.' Share what you built.","✏️ Write a Dev.to article: 'What I learned building my first React Native app'.","✏️ Find one open source React Native library. Read its code. Try to fix a small bug.","✏️ Plan your next 3 months: what will you learn? What will you build? Write it down.","✏️ YOU ARE NOW A REACT NATIVE DEVELOPER. Celebrate. Go build the future. 🚀"]},
+]},
+]},
+];
+
+/* ══ BUILD UI ══ */
+function showM(i){
+  document.querySelectorAll('.mb').forEach((b,j)=>b.classList.toggle('on',j===i));
+  document.querySelectorAll('.ms').forEach((s,j)=>s.classList.toggle('on',j===i));
+}
+
+const iconMap={yt:'▶',doc:'📄',free:'🆓',hi:'🇮🇳'};
+const badgeMap={yt:'VIDEO',doc:'OFFICIAL',free:'FREE',hi:'हिंदी'};
+const badgeClass={yt:'byt',doc:'bdoc',free:'bfree',hi:'bhi'};
+
+function rl(r){
+  return `<a class="rl" href="${r.u}" target="_blank" rel="noopener">
+    <div class="ri ${r.icon}">${iconMap[r.icon]}</div>
+    <div class="rmeta"><div class="rtitle">${r.t}</div><div class="rch">${r.c}</div></div>
+    <span class="rbadge ${badgeClass[r.icon]}">${badgeMap[r.icon]}</span>
+  </a>`;
+}
+
+let tabCounter=0;
+function buildCard(d,mc){
+  const id='c'+(tabCounter++);
+  const tabs=[], panels=[];
+  let first=true;
+  const addTab=(label,items,pid)=>{
+    if(!items||!items.length) return;
+    const on=first?'on':'';
+    first=false;
+    tabs.push(`<button class="tbtn ${on}" onclick="sw(this,'${pid}')">${label}</button>`);
+    panels.push(`<div class="tpanel ${on}" id="${pid}">${items.map(rl).join('')}</div>`);
+  };
+  addTab('🌍 English',d.en,`en-${id}`);
+  addTab('🇮🇳 Hindi',d.hi,`hi-${id}`);
+  addTab('📄 Docs',d.docs,`doc-${id}`);
+  // practice
+  const pItems=(d.practice||[]).map((p,i)=>{
+    const tg=i<2?'easy':i<4?'med':'hard';
+    const lbl=i<2?'EASY':i<4?'MEDIUM':'CHALLENGE';
+    return `<div class="practice-item"><div class="pidx">${String(i+1).padStart(2,'0')}</div><div class="ptext"><span class="ptag tag-${tg}">${lbl}</span>${p.replace('✏️ ','')}</div></div>`;
+  }).join('');
+  if(pItems){
+    const on=first?'on':'';first=false;
+    tabs.push(`<button class="tbtn ${on}" onclick="sw(this,'pr-${id}')">✏️ Practice</button>`);
+    panels.push(`<div class="tpanel ${on}" id="pr-${id}"><div class="practice-list">${pItems}</div></div>`);
+  }
+  const hasRes=tabs.length>0;
+  return `<div class="dc">
+    <div class="dh" onclick="toggle(this.parentElement)">
+      <div class="dnum">${d.day}</div>
+      <div class="dtopic">${d.topic}</div>
+      <div class="xi">+</div>
+    </div>
+    <div class="dd">
+      <div class="dr"><div class="dl">📖 What You Learn</div><div class="dt">${d.what}</div></div>
+      <div class="dr"><div class="dl">🎯 Why You Learn It</div><div class="dt">${d.why}</div></div>
+      <div class="dr"><div class="dl">🚀 Real World Uses</div><div class="dt">${d.uses}</div></div>
+      ${hasRes?`<div class="rtabs"><div class="rhead">🎓 Resources & Practice</div><div class="tabrow">${tabs.join('')}</div>${panels.join('')}</div>`:''}
+    </div>
+  </div>`;
+}
+
+function build(){
+  const root=document.getElementById('root');
+  M.forEach((m,mi)=>{
+    const sec=document.createElement('div');
+    sec.className='ms'+(mi===0?' on':'');
+    sec.style.setProperty('--mc',m.color);
+    const pct=Math.round((mi+1)/6*100);
+    sec.innerHTML=`<div class="mhdr"><div class="mnum">0${mi+1}</div><div class="minfo"><h2>${m.title}</h2><p>${m.desc}</p></div><div class="mtag">${m.tag}</div></div><div class="pbar"><div class="pfill" style="width:${pct}%"></div></div>`;
+    m.weeks.forEach(w=>{
+      const wb=document.createElement('div');wb.className='wb';
+      wb.innerHTML=`<div class="wtitle">${w.label}</div>`;
+      const grid=document.createElement('div');grid.className='dgrid';
+      w.days.forEach(d=>{
+        const div=document.createElement('div');
+        div.innerHTML=buildCard(d,m.color);
+        grid.appendChild(div.firstChild);
+      });
+      wb.appendChild(grid);sec.appendChild(wb);
+    });
+    sec.appendChild(Object.assign(document.createElement('div'),{className:'tip',innerHTML:`<strong>💡 Month ${mi+1} Pro Tip</strong>${m.tip}`}));
+    root.appendChild(sec);
+  });
+}
+
+function toggle(el){el.classList.toggle('open');}
+function sw(btn,pid){
+  const tr=btn.parentElement;
+  const wrap=tr.parentElement;
+  tr.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+  wrap.querySelectorAll('.tpanel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  const p=document.getElementById(pid);
+  if(p) p.classList.add('on');
+}
+
+build();
+</script>
+</body>
+</html>
